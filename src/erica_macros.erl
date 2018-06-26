@@ -223,7 +223,7 @@ get_value([Name|_], Obj, _Len, _Count) ->
 
 get_source_id(Source) ->
     iolist_to_binary([io_lib:format("~.16b",[N])
-            || N <- binary_to_list(crypto:md5(Source))]).
+            || N <- binary_to_list(erlang:md5(Source))]).
 
 remove_function_name(Source) ->
     re:replace(Source, "^function\s+[^(]*", "function ", [ multiline, caseless, {return, binary}]).

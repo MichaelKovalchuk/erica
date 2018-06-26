@@ -258,7 +258,7 @@ relpath(Path, Root) ->
 %% function from pragmatic programmer book.
 md5_file(File) ->
     case file:open(File, [binary,raw,read]) of
-    {ok, P} -> loop(P, crypto:md5_init());
+    {ok, P} -> loop(P, erlang:md5_init());
     Error   -> Error
     end.
 
@@ -294,10 +294,10 @@ normalize_path1([Path|Rest], Acc) ->
 loop (P, C) ->
     case file:read(P, ?BLOCKSIZE) of
     {ok, Bin} ->
-        loop(P, crypto:md5_update(C, Bin));
+        loop(P, erlang:md5_update(C, Bin));
     eof ->
         file:close(P),
-        {ok, couchbeam_util:to_binary(crypto:md5_final(C))}
+        {ok, couchbeam_util:to_binary(erlang:md5_final(C))}
     end.
 
 %% TODO: Rename emulate_escript_foldl to escript_foldl and remove
